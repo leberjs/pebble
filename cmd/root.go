@@ -35,7 +35,7 @@ func (ec *ExecutionContext) Execute() error {
 	}
 
 	cfg := config.ReadConfig()
-    ec.config = *cfg
+    	ec.config = *cfg
 
 	if len(ec.command.opts) == 0 {
 		ce, cp = cfg.EnsureConfigValues()
