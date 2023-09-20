@@ -7,7 +7,7 @@ type Model struct {
 }
 
 func NewModel(c *config.Config) Model {
-    m := Model{config: *c}
+	m := Model{config: *c}
 
 	return m
 }

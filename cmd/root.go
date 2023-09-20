@@ -8,30 +8,30 @@ import (
 	"github.com/leberjs/pebble/internal/config"
 )
 
-func ExecuteArgs() (*config.Config, error)  {
-    profileName := flag.String(
-        constants.ProfileName,
-        "",
-        "aws profile name set in `credentials`",
-    )
+func ExecuteArgs() (*config.Config, error) {
+	profileName := flag.String(
+		constants.ProfileName,
+		"",
+		"aws profile name set in `credentials`",
+	)
 
-    syncBucket := flag.String(
-        constants.SyncBucket,
-        "",
-        "aws s3 bucket to sync files from",
-    )
+	syncBucket := flag.String(
+		constants.SyncBucket,
+		"",
+		"aws s3 bucket to sync files from",
+	)
 
-    queueUrl := flag.String(
-        constants.QueueUrl,
-        "",
-        "aws queue url",
-    )
+	queueUrl := flag.String(
+		constants.QueueUrl,
+		"",
+		"aws queue url",
+	)
 
-    flag.Parse()
+	flag.Parse()
 
-    cfg, err := config.EnsureConfig(*profileName, *syncBucket, *queueUrl)
+	cfg, err := config.EnsureConfig(*profileName, *syncBucket, *queueUrl)
 
-    fmt.Println(cfg)
+	fmt.Println(cfg)
 
-    return cfg, err
+	return cfg, err
 }

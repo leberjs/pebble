@@ -64,7 +64,7 @@ func EnsureConfig(profileName, syncBucket, queueUrl string) (*Config, error) {
 
 	err = cfg.ensureConfigValues()
 	if err != nil {
-		return nil, err 
+		return nil, err
 	}
 
 	return cfg, nil

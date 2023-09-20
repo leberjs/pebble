@@ -9,12 +9,12 @@ import (
 )
 
 func main() {
-    cfg, err := cmd.ExecuteArgs()
-    if err != nil {
-        log.Fatal(err)
-    }
+	cfg, err := cmd.ExecuteArgs()
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    tui.Run(cfg)
+	tui.Run(cfg)
 
-    os.Exit(0)
+	os.Exit(0)
 }
