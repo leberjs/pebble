@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"flag"
-	"fmt"
 
 	"github.com/leberjs/pebble/constants"
 	"github.com/leberjs/pebble/internal/config"
@@ -30,8 +29,6 @@ func ExecuteArgs() (*config.Config, error) {
 	flag.Parse()
 
 	cfg, err := config.EnsureConfig(*profileName, *syncBucket, *queueUrl)
-
-	fmt.Println(cfg)
 
 	return cfg, err
 }
