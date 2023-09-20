@@ -1,94 +1,37 @@
 package cmd
 
 import (
-	"errors"
+	"flag"
 	"fmt"
 
-	"github.com/leberjs/pebble/config"
+	"github.com/leberjs/pebble/constants"
+	"github.com/leberjs/pebble/internal/config"
 )
 
-type ExecutionContext struct {
-	Command Command
-	Config  config.PebbleConfig
-}
+func ExecuteArgs() (*config.Config, error)  {
+    profileName := flag.String(
+        constants.ProfileName,
+        "",
+        "aws profile name set in `credentials`",
+    )
 
-type Command struct {
-	Opts []Opt
-}
+    syncBucket := flag.String(
+        constants.SyncBucket,
+        "",
+        "aws s3 bucket to sync files from",
+    )
 
-type Opt struct {
-	Key   string
-	Value string
-}
+    queueUrl := flag.String(
+        constants.QueueUrl,
+        "",
+        "aws queue url",
+    )
 
-func New(args []string) *ExecutionContext {
-	c := parseArgs(args)
+    flag.Parse()
 
-	return &ExecutionContext{Command: c}
-}
+    cfg, err := config.EnsureConfig(*profileName, *syncBucket, *queueUrl)
 
-func (ec *ExecutionContext) Execute() (*ExecutionContext, error) {
-	ce, cp := config.EnsureConfig()
-	if !ce {
-		e := fmt.Sprintf("Fresh config created at %s. Please update config or pass in needed args", cp)
-		return nil, errors.New(e)
-	}
+    fmt.Println(cfg)
 
-	cfg := config.ReadConfig()
-	ec.Config = *cfg
-
-	if len(ec.Command.Opts) == 0 {
-		ce, cp = cfg.EnsureConfigValues()
-		if !ce {
-			e := fmt.Sprintf("One or more params missing. Please pass them in or update config located at %s", cp)
-			return nil, errors.New(e)
-		}
-	}
-
-	if len(ec.Command.Opts) == 3 {
-		return ec, nil
-	}
-
-	diff := optDifference(ec.Command.Opts)
-	if len(diff) > 0 {
-		b := false
-		for _, opt := range diff {
-			if opt == "profile-name" && ec.Config.Settings.AwsProfile == "" {
-				b = true
-			}
-
-			if opt == "sync-bucket-name" && ec.Config.Settings.SyncBucket == "" {
-				b = true
-			}
-
-			if opt == "queue-url" && ec.Config.Settings.QueueUrl == "" {
-				b = true
-			}
-		}
-
-		if b {
-			e := fmt.Sprintf("One or more params missing. Please pass them in or update config located at %s", cp)
-			return nil, errors.New(e)
-		} else {
-			return ec, nil
-		}
-	}
-
-	return ec, nil
-}
-
-func optDifference(opts []Opt) (diff []string) {
-	m := make(map[string]bool)
-
-	for _, opt := range opts {
-		m[opt.Key] = true
-	}
-
-	for _, aOpt := range allowedOpts {
-		if _, ok := m[aOpt]; !ok {
-			diff = append(diff, aOpt)
-		}
-	}
-
-	return
+    return cfg, err
 }
