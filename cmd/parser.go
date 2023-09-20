@@ -17,7 +17,7 @@ func parseArgs(args []string) Command {
 
 	// one arg means only program passed in
 	if len(args) == 1 {
-		c = Command{opts: make([]Opt, 0)}
+		c = Command{Opts: make([]Opt, 0)}
 	}
 
 	/*  NOTE:
@@ -26,7 +26,7 @@ func parseArgs(args []string) Command {
 	*/
 	opts := parseOpts(args[1:])
 
-	c = Command{opts: opts}
+	c = Command{Opts: opts}
 
 	return c
 }
@@ -40,13 +40,13 @@ func parseOpts(optArgs []string) []Opt {
 		if strings.Contains(trimOpt, "=") {
 			s := strings.Split(trimOpt, "=")
 			if slices.Contains(allowedOpts, s[0]) {
-				o := Opt{key: s[0], value: s[1]}
+				o := Opt{Key: s[0], Value: s[1]}
 				opts = append(opts, o)
 				idx++
 			}
 		} else {
 			if slices.Contains(allowedOpts, trimOpt) {
-				o := Opt{key: trimOpt, value: optArgs[i+1]}
+				o := Opt{Key: trimOpt, Value: optArgs[i+1]}
 				opts = append(opts, o)
 				idx = idx + 2
 			}

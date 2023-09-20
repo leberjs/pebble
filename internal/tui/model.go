@@ -1,4 +1,4 @@
-package internal
+package tui
 
 import tea "github.com/charmbracelet/bubbletea"
 
@@ -8,12 +8,18 @@ type Model struct {
 
 type AppConfig struct {
 	path    string
-	profile string
+	profileName string
+    syncBucket string
+    queueUrl string
 }
 
-func NewModel(profile string) Model {
+func NewModel(profileName, syncBucket, queueUrl string) Model {
 	m := Model{
-		config: AppConfig{profile: profile},
+		config: AppConfig{
+            profileName: profileName,
+            syncBucket: syncBucket,
+            queueUrl: queueUrl,
+        },
 	}
 
 	return m
@@ -36,5 +42,5 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m Model) View() string {
-	return m.config.profile
+	return m.config.profileName
 }

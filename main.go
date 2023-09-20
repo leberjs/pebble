@@ -5,10 +5,14 @@ import (
 	"os"
 
 	"github.com/leberjs/pebble/cmd"
+	"github.com/leberjs/pebble/internal/tui"
 )
 
 func main() {
-	if err := cmd.New(os.Args).Execute(); err != nil {
+	ec, err := cmd.New(os.Args).Execute()
+	if err != nil {
 		log.Fatal(err)
 	}
+
+    tui.New(ec).Run()
 }
