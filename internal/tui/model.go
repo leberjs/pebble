@@ -7,19 +7,19 @@ type Model struct {
 }
 
 type AppConfig struct {
-	path    string
+	path        string
 	profileName string
-    syncBucket string
-    queueUrl string
+	syncBucket  string
+	queueUrl    string
 }
 
 func NewModel(profileName, syncBucket, queueUrl string) Model {
 	m := Model{
 		config: AppConfig{
-            profileName: profileName,
-            syncBucket: syncBucket,
-            queueUrl: queueUrl,
-        },
+			profileName: profileName,
+			syncBucket:  syncBucket,
+			queueUrl:    queueUrl,
+		},
 	}
 
 	return m

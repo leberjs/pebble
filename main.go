@@ -14,5 +14,5 @@ func main() {
 		log.Fatal(err)
 	}
 
-    tui.New(ec).Run()
+	tui.New(ec).Run()
 }

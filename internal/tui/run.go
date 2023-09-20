@@ -15,7 +15,7 @@ type RunContext struct {
 }
 
 func New(ec *cmd.ExecutionContext) *RunContext {
-    var profileName, syncBucket, queueUrl string
+	var profileName, syncBucket, queueUrl string
 
 	// NOTE: This feels bad but I'm tired
 	var idx int
@@ -24,34 +24,34 @@ func New(ec *cmd.ExecutionContext) *RunContext {
 
 	idx = slices.IndexFunc(opts, func(o cmd.Opt) bool { return o.Key == "profile-name" })
 	if idx == -1 {
-		profileName =  ec.Config.Settings.AwsProfile
+		profileName = ec.Config.Settings.AwsProfile
 	} else {
-		profileName =  opts[idx].Value
+		profileName = opts[idx].Value
 	}
 
 	idx = slices.IndexFunc(opts, func(o cmd.Opt) bool { return o.Key == "sync-bucket-name" })
 	if idx == -1 {
-		syncBucket =  ec.Config.Settings.SyncBucket
+		syncBucket = ec.Config.Settings.SyncBucket
 	} else {
-		syncBucket =  opts[idx].Value
+		syncBucket = opts[idx].Value
 	}
 
 	idx = slices.IndexFunc(opts, func(o cmd.Opt) bool { return o.Key == "queue-url" })
 	if idx == -1 {
-		queueUrl =  ec.Config.Settings.QueueUrl
+		queueUrl = ec.Config.Settings.QueueUrl
 	} else {
-		queueUrl =  opts[idx].Value
+		queueUrl = opts[idx].Value
 	}
 
-    return  &RunContext{
+	return &RunContext{
 		profileName: profileName,
-		syncBucket: syncBucket, 
-		queueUrl: queueUrl,   
+		syncBucket:  syncBucket,
+		queueUrl:    queueUrl,
 	}
 }
 
 func (rc *RunContext) Run() {
-    m:= NewModel(rc.profileName, rc.syncBucket, rc.queueUrl)
+	m := NewModel(rc.profileName, rc.syncBucket, rc.queueUrl)
 
 	p := tea.NewProgram(m, tea.WithAltScreen())
 	if _, err := p.Run(); err != nil {
