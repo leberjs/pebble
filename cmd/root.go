@@ -5,6 +5,7 @@ import (
 
 	"github.com/leberjs/pebble/constants"
 	"github.com/leberjs/pebble/internal/config"
+	"github.com/leberjs/pebble/internal/syncer"
 )
 
 func ExecuteArgs() (*config.Config, error) {
@@ -29,6 +30,8 @@ func ExecuteArgs() (*config.Config, error) {
 	flag.Parse()
 
 	cfg, err := config.EnsureConfig(*profileName, *syncBucket, *queueUrl)
+
+    syncer.EnsureSyncDir()
 
 	return cfg, err
 }

@@ -7,16 +7,11 @@ import (
 	"github.com/leberjs/pebble/internal/config"
 )
 
-type RunContext struct {
-	profileName string
-	syncBucket  string
-	queueUrl    string
-}
+func Run(c *config.Config, f []string) {
+	m := NewModel(c, f)
 
-func Run(c *config.Config) {
-	m := NewModel(c)
-
-	p := tea.NewProgram(m, tea.WithAltScreen())
+	p := tea.NewProgram(m)
+	// p := tea.NewProgram(m, tea.WithAltScreen())
 	if _, err := p.Run(); err != nil {
 		log.Fatal(err)
 	}

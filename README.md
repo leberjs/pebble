@@ -10,10 +10,10 @@ TUI which allows user to sync files (JSON) from an S3 bucket and then send those
 ## Roadmap
 
 ### v0.1.0
-- [ ] aws api (config and sqs)
-- [ ] file viewer/picker
-- [ ] send file content as message to sqs
-- [ ] styling
+- [x] aws api (config and sqs)
+- [x] file viewer/picker
+- [x] send file content as message to sqs
+- [x] styling
 - [ ] testing
 
 ### v0.2.0

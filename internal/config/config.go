@@ -15,6 +15,7 @@ var (
 	configDir      = ".pebble"
 	configDirPath  = filepath.Join(homeDir, configDir)
 	configFilePath = filepath.Join(homeDir, configDir, "pebble.toml")
+	fileSyncPath   = filepath.Join(homeDir, configDir, "sync")
 )
 
 type Config struct {
