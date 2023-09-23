@@ -15,13 +15,13 @@ const (
 )
 
 const (
-	primaryColor = lipgloss.Color("#b24c63")
+	primaryColor   = lipgloss.Color("#b24c63")
 	secondaryColor = lipgloss.Color("#fffbff")
-	textColor     = lipgloss.Color("#89bbfe")
+	textColor      = lipgloss.Color("#89bbfe")
 )
 
 var (
-    headFootStyle = lipgloss.NewStyle().Bold(true).Background(primaryColor).Foreground(secondaryColor)
+	headFootStyle = lipgloss.NewStyle().Bold(true).Background(primaryColor).Foreground(secondaryColor)
 	textStyle     = lipgloss.NewStyle().Foreground(textColor)
 	symbolStyle   = lipgloss.NewStyle().Bold(true).Foreground(primaryColor)
 )
@@ -37,7 +37,7 @@ func (m Model) View() string {
 		s.WriteString(spinnerView(m))
 
 	case MESSAGE_SENT:
-        s.WriteString(responseVew(m))
+		s.WriteString(responseVew(m))
 	}
 
 	return s.String()
@@ -46,7 +46,7 @@ func (m Model) View() string {
 func filePickerView(m Model) string {
 	var s strings.Builder
 
-    s.WriteString(fmt.Sprintf("\n%s\n\n", headFootStyle.Render("Available Messages:")))
+	s.WriteString(fmt.Sprintf("\n%s\n\n", headFootStyle.Render("Available Messages:")))
 
 	for i, f := range m.filepicker.files {
 		cursor := " "
@@ -59,9 +59,9 @@ func filePickerView(m Model) string {
 		s.WriteString(fmt.Sprintf("%s %s\n", c, v))
 	}
 
-    s.WriteString("\n")
+	s.WriteString("\n")
 	footer := fmt.Sprintf("%s/k up %s %s/j down %s ctrl+c quit", up, bullet, down, bullet)
-    s.WriteString(fmt.Sprintf("%s", headFootStyle.Render(footer)))
+	s.WriteString(fmt.Sprintf("%s", headFootStyle.Render(footer)))
 
 	return s.String()
 }
@@ -82,11 +82,11 @@ func spinnerView(m Model) string {
 func responseVew(m Model) string {
 	var s strings.Builder
 
-    s.WriteString("\n")
+	s.WriteString("\n")
 	s.WriteString(fmt.Sprintf("%s", textStyle.Render("Message sent successfully")))
 
-    s.WriteString("\n\n")
-    s.WriteString(headFootStyle.Render("ctrl+c to quit"))
+	s.WriteString("\n\n")
+	s.WriteString(headFootStyle.Render("ctrl+c to quit"))
 
 	return s.String()
 }

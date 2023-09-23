@@ -8,16 +8,16 @@ import (
 
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var (
-        cmd tea.Cmd
-        cmds []tea.Cmd
-    )
+		cmd  tea.Cmd
+		cmds []tea.Cmd
+	)
 
 	switch msg := msg.(type) {
 	case sendFileSqsMsg:
 		return m, sendSqsMessageCmd(m)
 
 	case sqsMessageSentMsg:
-        m.state = MESSAGE_SENT
+		m.state = MESSAGE_SENT
 		// return m, tea.Quit
 
 	case tea.KeyMsg:
@@ -37,19 +37,18 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		case key.Matches(msg, DefaultKeyMap.Enter):
 			m.filepicker.selectedFile = m.filepicker.cursor
-            m.state = MESSAGE_SEND
+			m.state = MESSAGE_SEND
 
 			cmd = sendSqsMessageCmd(m)
-            cmds = append(cmds, cmd)
-            cmds = append(cmds, m.spinner.Tick)
+			cmds = append(cmds, cmd)
+			cmds = append(cmds, m.spinner.Tick)
 		}
 
-    case spinner.TickMsg:
-        var cmd tea.Cmd
-        m.spinner, cmd = m.spinner.Update(msg)
-        return m, cmd
+	case spinner.TickMsg:
+		var cmd tea.Cmd
+		m.spinner, cmd = m.spinner.Update(msg)
+		return m, cmd
 	}
 
-	// return m, cmd
-    return m, tea.Batch(cmds...)
+	return m, tea.Batch(cmds...)
 }

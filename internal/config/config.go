@@ -40,7 +40,26 @@ func (c *Config) QueueUrl() string {
 	return c.Settings.QueueUrl
 }
 
-func EnsureConfig(profileName, syncBucket, queueUrl string) (*Config, error) {
+func GetConfig(profileName, syncBucket, queueUrl string) (*Config, error) {
+	var cfg *Config
+
+	// Check if all params provided
+	if len(profileName) > 0 && len(syncBucket) > 0 && len(queueUrl) > 0 {
+		cfg = &Config{
+			Settings{
+				ProfileName: profileName,
+				SyncBucket:  syncBucket,
+				QueueUrl:    queueUrl,
+			},
+		}
+
+		return cfg, nil
+	} else {
+		return ensureConfig(profileName, syncBucket, queueUrl)
+	}
+}
+
+func ensureConfig(profileName, syncBucket, queueUrl string) (*Config, error) {
 	_, err := os.Stat(configFilePath)
 	if os.IsNotExist(err) {
 		writeDefaultConfig()

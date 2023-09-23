@@ -11,7 +11,7 @@ import (
 func ExecuteArgs() (*config.Config, error) {
 	profileName := flag.String(
 		constants.ProfileName,
-		"",
+		"default",
 		"aws profile name set in `credentials`",
 	)
 
@@ -29,9 +29,9 @@ func ExecuteArgs() (*config.Config, error) {
 
 	flag.Parse()
 
-	cfg, err := config.EnsureConfig(*profileName, *syncBucket, *queueUrl)
+	cfg, err := config.GetConfig(*profileName, *syncBucket, *queueUrl)
 
-    syncer.EnsureSyncDir()
+	syncer.EnsureSyncDir()
 
 	return cfg, err
 }

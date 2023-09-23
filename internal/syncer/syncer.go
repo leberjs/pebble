@@ -17,29 +17,29 @@ func EnsureSyncDir() {
 }
 
 func SyncFiles() error {
-    // TODO: call function to sync from s3
+	// TODO: call function to sync from s3
 	return nil
 }
 
 func GetSyncFiles() []string {
-    f, err := os.ReadDir(fileSyncPath)
-    if err != nil {
-        log.Fatal(err)
-    }
+	f, err := os.ReadDir(fileSyncPath)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    files := make([]string, len(f))
-    for i, file := range f {
-        files[i] = file.Name()
-    }
+	files := make([]string, len(f))
+	for i, file := range f {
+		files[i] = file.Name()
+	}
 
-    return files
+	return files
 }
 
 func GetFileContent(fn string) string {
-    d, err := os.ReadFile(filepath.Join(fileSyncPath, fn))
-    if err != nil {
-        log.Fatal(err)
-    }
+	d, err := os.ReadFile(filepath.Join(fileSyncPath, fn))
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    return string(d)
+	return string(d)
 }

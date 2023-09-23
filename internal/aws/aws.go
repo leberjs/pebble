@@ -44,7 +44,7 @@ func (ac *AwsContext) SendMessage(fc, qu string) {
 	if qt == FIFO {
 		guid := uuid.New().String()
 		msg.MessageDeduplicationId = &guid
-        msg.MessageGroupId = &guid
+		msg.MessageGroupId = &guid
 	}
 
 	_, err := sc.SendMessage(context.TODO(), msg)

@@ -15,7 +15,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-    files := syncer.GetSyncFiles()
+	files := syncer.GetSyncFiles()
 
 	tui.Run(cfg, files)
 
