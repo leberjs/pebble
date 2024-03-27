@@ -11,7 +11,7 @@ import (
 func ExecuteArgs() (*config.Config, error) {
 	profileName := flag.String(
 		constants.ProfileName,
-		"default",
+		"",
 		"aws profile name set in `credentials`",
 	)
 
