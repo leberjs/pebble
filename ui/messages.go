@@ -1,4 +1,4 @@
-package tui
+package ui
 
 type sendFileSqsMsg struct{}
 

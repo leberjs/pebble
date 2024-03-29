@@ -1,37 +1,58 @@
 package cmd
 
 import (
-	"flag"
+	"fmt"
+	"os"
 
+	tea "github.com/charmbracelet/bubbletea"
 	"github.com/leberjs/pebble/constants"
 	"github.com/leberjs/pebble/internal/config"
 	"github.com/leberjs/pebble/internal/syncer"
+	"github.com/leberjs/pebble/ui"
+	"github.com/spf13/cobra"
 )
 
-func ExecuteArgs() (*config.Config, error) {
-	profileName := flag.String(
-		constants.ProfileName,
-		"",
-		"aws profile name set in `credentials`",
-	)
+var (
+	pn string
+	qu string
 
-	syncBucket := flag.String(
-		constants.SyncBucket,
-		"",
-		"aws s3 bucket to sync files from",
-	)
+	rc = &cobra.Command{
+		Use:   "pbl",
+		Short: "A simple tool to push messages to an AWS SQS queue",
+	}
+)
 
-	queueUrl := flag.String(
-		constants.QueueUrl,
-		"",
-		"aws queue url",
-	)
+func Execute() {
+	if err := rc.Execute(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
 
-	flag.Parse()
+func init() {
+	rc.Flags().StringVar(&pn, constants.ProfileName, "", "aws profile name")
+	rc.Flags().StringVar(&qu, constants.QueueUrl, "", "aws queue url")
 
-	cfg, err := config.GetConfig(*profileName, *syncBucket, *queueUrl)
+	rc.Run = func(_ *cobra.Command, _ []string) {
+		cfg, err := config.GetConfig(pn, qu)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
 
-	syncer.EnsureSyncDir()
+		if err = cfg.EnsureConfigValues(); err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
 
-	return cfg, err
+		files := syncer.GetSyncFiles()
+
+		m := ui.NewModel(cfg, files)
+
+		p := tea.NewProgram(m)
+		if _, err := p.Run(); err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+	}
 }

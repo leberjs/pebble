@@ -12,10 +12,6 @@ var (
 	fileSyncPath = filepath.Join(homeDir, configDir, "sync")
 )
 
-func EnsureSyncDir() {
-	os.MkdirAll(fileSyncPath, 0750)
-}
-
 func SyncFiles() error {
 	// TODO: call function to sync from s3
 	return nil

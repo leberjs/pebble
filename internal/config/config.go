@@ -24,7 +24,6 @@ type Config struct {
 
 type Settings struct {
 	ProfileName string `toml:"profile-name"`
-	SyncBucket  string `toml:"sync-bucket-name"`
 	QueueUrl    string `toml:"queue-url"`
 }
 
@@ -32,66 +31,50 @@ func (c *Config) ProfileName() string {
 	return c.Settings.ProfileName
 }
 
-func (c *Config) SyncBucket() string {
-	return c.Settings.SyncBucket
-}
-
 func (c *Config) QueueUrl() string {
 	return c.Settings.QueueUrl
 }
 
-func GetConfig(profileName, syncBucket, queueUrl string) (*Config, error) {
+func GetConfig(profileName, queueUrl string) (*Config, error) {
 	var cfg *Config
 
 	// Check if all params provided
-	if len(profileName) > 0 && len(syncBucket) > 0 && len(queueUrl) > 0 {
+	if len(profileName) > 0 && len(queueUrl) > 0 {
 		cfg = &Config{
 			Settings{
 				ProfileName: profileName,
-				SyncBucket:  syncBucket,
 				QueueUrl:    queueUrl,
 			},
 		}
 
 		return cfg, nil
 	} else {
-		return ensureConfig(profileName, syncBucket, queueUrl)
+    _, err := os.Stat(configFilePath)
+    if os.IsNotExist(err) {
+      writeDefaultConfig()
+      e := fmt.Sprintf(
+        "Fresh config created at %s. Please update config or pass in needed args",
+        configFilePath,
+      )
+      return nil, errors.New(e)
+    }
+
+    cfg = readConfig()
+
+    if profileName != "" {
+      cfg.Settings.ProfileName = profileName
+    }
+    if queueUrl != "" {
+      cfg.Settings.QueueUrl = queueUrl
+    }
+
+
+    return cfg, nil
 	}
 }
 
-func ensureConfig(profileName, syncBucket, queueUrl string) (*Config, error) {
-	_, err := os.Stat(configFilePath)
-	if os.IsNotExist(err) {
-		writeDefaultConfig()
-		e := fmt.Sprintf(
-			"Fresh config created at %s. Please update config or pass in needed args",
-			configFilePath,
-		)
-		return nil, errors.New(e)
-	}
-
-	cfg := readConfig()
-
-	if profileName != "" {
-		cfg.Settings.ProfileName = profileName
-	}
-	if syncBucket != "" {
-		cfg.Settings.SyncBucket = syncBucket
-	}
-	if queueUrl != "" {
-		cfg.Settings.QueueUrl = queueUrl
-	}
-
-	err = cfg.ensureConfigValues()
-	if err != nil {
-		return nil, err
-	}
-
-	return cfg, nil
-}
-
-func (c *Config) ensureConfigValues() error {
-	if c.Settings.ProfileName == "" || c.Settings.SyncBucket == "" || c.Settings.QueueUrl == "" {
+func (c *Config) EnsureConfigValues() error {
+	if c.Settings.ProfileName == "" || c.Settings.QueueUrl == "" {
 		e := fmt.Sprintf(
 			"Please update config at %s or pass in needed args",
 			configFilePath,
@@ -117,6 +100,8 @@ func writeDefaultConfig() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	os.MkdirAll(fileSyncPath, 0750)
 }
 
 func readConfig() *Config {
