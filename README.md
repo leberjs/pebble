@@ -15,16 +15,13 @@ TUI which allows user to sync files (JSON) from an S3 bucket and then send those
 - [x] send file content as message to sqs
 - [x] styling
 
-### v0.2.0 and beyond
-- [ ] allow sso credentials
-
-### v0.3.0
+### v0.2.0
 - [ ] aws s3 api
 - [ ] option to sync files from s3 bucket
 
-### v0.4.0
+### v0.3.0
 - [ ] file preview
 
-### v0.5.0 and beyond
+### v0.4.0 and beyond
 - [ ] file editor
 - [ ] ???
