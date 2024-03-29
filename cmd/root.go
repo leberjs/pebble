@@ -6,7 +6,7 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/leberjs/pebble/constants"
-	"github.com/leberjs/pebble/internal/config"
+	"github.com/leberjs/pebble/config"
 	"github.com/leberjs/pebble/internal/syncer"
 	"github.com/leberjs/pebble/ui"
 	"github.com/spf13/cobra"

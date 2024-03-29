@@ -2,7 +2,7 @@ package ui
 
 import (
 	"github.com/charmbracelet/bubbles/spinner"
-	"github.com/leberjs/pebble/internal/config"
+	"github.com/leberjs/pebble/config"
 )
 
 const (
