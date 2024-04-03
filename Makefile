@@ -5,3 +5,7 @@ build-darwin:
 .PHONY: build-linux
 build-linux:
 	go build -ldflags="-s -w" -o pbl
+
+.PHONY: release
+release:
+	goreleaser release --clean
