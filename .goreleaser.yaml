@@ -29,7 +29,8 @@ brews:
 
 changelog:
   sort: asc
+  use: gihub
   filters:
     exclude:
-      - "^docs:"
       - "^test:"
+      - "^chore:"
