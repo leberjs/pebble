@@ -29,7 +29,7 @@ brews:
 
 changelog:
   sort: asc
-  use: gihub
+  use: github
   filters:
     exclude:
       - "^test:"
