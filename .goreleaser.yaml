@@ -33,6 +33,7 @@ changelog:
     exclude:
       - "^test:"
       - "^chore:"
+      - "^docs(CHANGELOG):"
   groups:
   - title: New
     regexp: '^.*?feat(\([[:word:]]+\))??!?:.+$'

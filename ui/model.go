@@ -19,8 +19,8 @@ type Model struct {
 }
 
 type filepicker struct {
-	cursor       int
 	files        []string
+	cursor       int
 	selectedFile int
 }
 
