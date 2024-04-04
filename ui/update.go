@@ -18,7 +18,6 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case sqsMessageSentMsg:
 		m.state = MESSAGE_SENT
-		// return m, tea.Quit
 
 	case tea.KeyMsg:
 		switch {
@@ -36,6 +35,11 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 
 		case key.Matches(msg, DefaultKeyMap.Enter):
+      if m.state == MESSAGE_SENT {
+        m.state = MESSAGE_CHOICE
+        break
+      }
+
 			m.filepicker.selectedFile = m.filepicker.cursor
 			m.state = MESSAGE_SEND
 

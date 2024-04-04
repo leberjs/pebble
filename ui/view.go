@@ -61,7 +61,7 @@ func filePickerView(m Model) string {
 
 	s.WriteString("\n")
 	footer := fmt.Sprintf("%s/k up %s %s/j down %s ctrl+c quit", up, bullet, down, bullet)
-	s.WriteString(fmt.Sprintf("%s", headFootStyle.Render(footer)))
+	s.WriteString(headFootStyle.Render(footer))
 
 	return s.String()
 }
@@ -79,14 +79,15 @@ func spinnerView(m Model) string {
 	return s.String()
 }
 
-func responseVew(m Model) string {
+func responseVew(_ Model) string {
 	var s strings.Builder
 
 	s.WriteString("\n")
-	s.WriteString(fmt.Sprintf("%s", textStyle.Render("Message sent successfully")))
+	s.WriteString(textStyle.Render("Message sent successfully"))
 
 	s.WriteString("\n\n")
-	s.WriteString(headFootStyle.Render("ctrl+c to quit"))
+  footer := fmt.Sprintf("ctrl+c to quit %s enter to return", bullet)
+	s.WriteString(headFootStyle.Render(footer))
 
 	return s.String()
 }
