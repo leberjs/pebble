@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 var (
@@ -23,9 +24,11 @@ func GetSyncFiles() []string {
 		log.Fatal(err)
 	}
 
-	files := make([]string, len(f))
-	for i, file := range f {
-		files[i] = file.Name()
+  var files []string
+	for _, file := range f {
+    if strings.HasSuffix(strings.ToLower(file.Name()), ".json") {
+		  files = append(files, file.Name())
+    }
 	}
 
 	return files
