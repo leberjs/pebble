@@ -1,6 +1,6 @@
 <div align="center">
   <h1>️ pebble </h1>
-  <img alt="GitHub Release" src="https://img.shields.io/github/v/release/leberjs/pebble"><img src="https://img.shields.io/badge/status-dev-red" />
+  <img alt="GitHub Release" src="https://img.shields.io/github/v/release/leberjs/pebble">&nbsp<img src="https://img.shields.io/badge/status-dev-red" />
   <h5>Pebble is a simple tool to send JSON files as messages to AWS SQS</h5>
 </div>
 
