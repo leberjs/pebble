@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ### Added
 - Pressing enter after message is sent returns to file picker view
+- Limit file picker display to .json files
 
 
 ## [v0.1.0](https://github.com/leberjs/pebble/releases/tag/v0.1.0) - 2024-04-03
