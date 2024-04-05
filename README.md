@@ -1,27 +1,43 @@
-# pebble
+<div align="center">
+  <h1>️ pebble </h1>
+  <img alt="GitHub Release" src="https://img.shields.io/github/v/release/leberjs/pebble">&nbsp<img src="https://img.shields.io/badge/status-dev-red" />
+  <h5>Pebble is a simple tool to send JSON files as messages to AWS SQS</h5>
+</div>
 
-<p>
-  <img src="https://img.shields.io/badge/status-dev-red" />
-</p>
+![Demo](demos/demo.gif)
 
-## Description
-TUI which allows user to sync files (JSON) from an S3 bucket and then send those as messages to an SQS Queue
+## Installation
+### Homebrew
+```console
+brew tap leberjs/tools
+brew install pebble
+```
 
-## Roadmap
+[Latest release](https://github.com/leberjs/pebble/releases/latest) binary
 
-### v0.1.0
-- [x] aws api (config and sqs)
-- [x] file viewer/picker
-- [x] send file content as message to sqs
-- [x] styling
+## Usage
+Run
+```sh
+pbl
+```
 
-### v0.2.0
-- [ ] aws s3 api
-- [ ] option to sync files from s3 bucket
+Run `pbl --help` for more info:
+```
+Usage:
+  pbl [flags]
 
-### v0.3.0
-- [ ] file preview
+Flags:
+  -h, --help                 help for pbl
+      --profile-name string  aws profile name
+      --queue-url string     aws queue url
+```
 
-### v0.4.0 and beyond
-- [ ] file editor
-- [ ] ???
+## Configuration
+The first time you run `pbl` a new directory and configuration file will be created at `~/.pebble/pebble.toml`. A sub-directory, `sync` will also
+be created. This is where the JSON files containing SQS messages should be stored.
+
+```toml
+[settings]
+profile-name = 'sandbox'
+queue-url = 'https://sqs.us-east-1.amazonaws.com/111111111111/my-queue'
+```
